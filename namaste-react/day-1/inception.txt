@@ -1,0 +1,28 @@
+1. Write the hello world program using html file 🌐
+
+2. Write the hello world using javascript 🚀
+
+3. Write the same code using the react ⚛️
+
+-> we have configure the react to our project so it can use the react 
+-> we are using cdn of react to the project
+-> 1st src is for the core react use
+-> 2nd src is for dom operation (or) dom manipulation
+
+-> react can only works on browser it can also be use in mobile application throught 
+the react native , there is something called react 3d also
+
+-> think about react-dom is like the bridge between your browser and react 🌉
+
+-> by adding both script we are able to access the React and ReactDom objects
+
+-> by using this both the object we can use the superpower now 🦸‍♂️🦸‍♀️
+
+-> React.createElement we have pass three agruments to it
+  -> tag name 🏷️
+  -> {} the attribute that assign to the tags 🎨
+  -> content of the tag 🌈
+
+-> ReactDOM.createRoot(pass referneces of root) 🌱
+
+-> root.render -> pass what you wanted to render inside the root 🎯

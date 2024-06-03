@@ -1,6 +1,6 @@
-body{
-    background-color: #111;
-}
-.heading{
-    color:turquoise;
+
+*{
+    margin:0px;
+    padding:5px;
+    overflow: hidden;
 }

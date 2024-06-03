@@ -1,0 +1,77 @@
+-> to make our app production ready we have to do lots of things
+✅ Tree Shaking
+✅ Minification of code
+✅ Image optimization
+✅ Code splitting
+✅ Code Chunking
+✅ Remove comments and console.log
+✅ Bundle 
+
+this all help to make our app production ready
+
+-> npx create-react-app behind the scenes use Webpack to bundle the things
+
+-> to create or build the production ready app does React only do all things?
+-> No, we need a lot of packages and libraries to make it production ready
+
+(i) npm -> npm is everything but not Node Package Manager
+    using npm we can install and remove the packages
+    npm is like a registry where all packages are available 📦
+
+(ii) to initialize npm we use the command npm init
+
+npm init -> it will create a configuration file package.json for npm 
+npm install -D parcel -> this will install the parcel 📦
+
+package.json -> it is the configuration file for npm 📄
+package-lock.json -> it contains the exact version of packages and dependencies 📄
+node_modules -> whatever package we have it will be available inside node_modules folder 📂
+
+📝 Note: The most important package in the project is the bundler which does all the things
+to make your app production ready
+
+📝 Note:
+(i) we will use parcel as the bundler 📦
+(ii) parcel is the beast 🦁
+
+we have two ways to install any package: devDependencies and normal dependencies
+
+-> devDependencies: the packages which are only needed for development but not for production are installed as devDependencies by using the command 
+📝 Note: npm install --save-dev package_name (or) npm install -D package_name
+
+-> normal dependencies: the packages which are needed for both development and production are installed as normal dependencies by using the command
+📝 Note: npm install package_name
+
+📝 Note: The things which can be regenerated should always be added in the .gitignore so git will not track it
+
+package.json and package-lock.json should always be pushed to GitHub but not the node_modules
+
+In the package.json we have version numbers, in front of that we have:
+(i) Caret (^) - it will upgrade the package with minor version changes 
+    auto-upgrade to minor if any upgrade happens to the package in npm registry
+(ii) Tilde (~) - it will upgrade the package with patch version changes
+    auto-upgrade to patch if any upgrade happens to the package in npm registry
+    
+    
+React is making your app fast but the bundler also helping him to do
+
+✅ Content Hashing
+✅ provide differnet dev and prod build
+✅ Tree Shaking : remove unwanted code 
+✅ can run https or http
+✅ dev server 
+✅ dev build
+✅ HMR : HOT Module Replacement : file wtcher algorithm written in c++
+✅ diffrential buidling for diffrent browser
+✅ diganoists : show error on terminal as well as on browser
+✅ code splitting
+✅ image optimization
+✅ Cache : it used the cached for faster build
+
+To make our app compactable with older version of broswer we can use browserlist for that 
+
+to config the browerlist in package.json we use browselist and assign him an array
+which contains all browser to support example last 2 version of chrome like this 
+
+refer :- browserlist.dev
+
