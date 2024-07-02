@@ -2,7 +2,7 @@
 import {useState,useEffect}  from 'react'
 
 
-export default  useOnlineStatus = () =>{
+export default function useOnlineStatus(){
     
     
     const [onlineStatus , setOnlineStatus] = useState(true)
