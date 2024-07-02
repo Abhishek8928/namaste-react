@@ -1,4 +1,4 @@
 /node_modules
 .parcel-cache
 dist
-namaste-react
+/namaste-react

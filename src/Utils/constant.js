@@ -1508,3 +1508,6 @@ export const SWIGGY_LOGO_URL = 'https://1000logos.net/wp-content/uploads/2021/05
 export const SWIGGY_CDN_URL = "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/";
 
 export const SWIGGY_CAROUSEL_URL = "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/";
+
+
+export const RES_MENU = "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=12.9352403&lng=77.624532&restaurantId=";

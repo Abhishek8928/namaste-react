@@ -1,69 +1,60 @@
 import Carousel from "./Carousel";
 import RestaurantCard from "./Card";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
 import CardSkeleton from "./Shimmer/Card";
 import CarouselSkeleton from "./Shimmer/Carousel";
 import TagWrapper from "./tag/TagWrapper";
 import Search from "./Search";
 import NoRestaurant from "./NoRestaurant";
+import {Link} from "react-router-dom"
+import useOnlineStatus from "../Utils/useOnlineStatus";
 
 const Body = () => {
-	const [data, setData] = useState([]);
-	const [restaurant, setRestaurant] = useState([]);
-	const [filterRestaurnts, setFilterRestaurnts] = useState([]);
+	const [data, setData] = useState([]); // complete api data
+	const [restaurant, setRestaurant] = useState([]); // cards 
+	const [filterRestaurnts, setFilterRestaurnts] = useState([]); // cards
 	const [topRestaurant, setTopRestaurant] = useState([]);
 	const [carouselList, setCarouselList] = useState([]);
 	const [searchTxt, setSearchTxt] = useState("");
+	
+	
+	function extractCollectionId(entityId) {
+		const regex = /collection_id=(\d+)/;
 
-	console.log(searchTxt);
+		const match = entityId.match(regex);
+
+		if (match) {
+			
+			return match[1];
+		} else {
+			
+			return entityId;
+		}
+	}
+
+
 	function getTopRatedRestaurant(restaurantList) {
 		return restaurantList.filter((item) => item.info.avgRating > 4.3);
 	}
 
 	useEffect(() => {
-		fetchData();
-		// updateRes();
+		fetchDataRes();
+		
 	}, []);
 	
-	// const updateRes = async () => {
-	// 	const url = "https://www.swiggy.com/dapi/restaurants/list/update";
-	// 	const data = {
-	// 		Lat: 19.032803,
-	// 		Lng: 73.10121529999999,
-			
-	// 	};
 
-	// 	try {
-	// 		const response = await fetch(url, {
-	// 			method: "POST",
-	// 			headers: {
-	// 				'Content-Type': 'application/json' // Specify the content type as JSON
-	// 			},
-	// 			body: JSON.stringify(data)
-	// 		});
-
-	// 		if (!response.ok) {
-	// 			throw new Error('Network response was not ok');
-	// 		}
-
-	// 		const result = await response.json();
-	// 		console.log(result);
-	// 	} catch (error) {
-	// 		console.error('Error:', error);
-	// 	}
-	// };
-
-	const fetchData = async () => {
+	const fetchDataRes = async () => {
 		const data = await fetch(
-			"https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.032803&lng=73.10121529999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+			"https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9352403&lng=77.624532&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
 		);
 		const restaurantList = await data.json();
+		
 		const { cards } = restaurantList?.data;
 		setData(cards);
 		setTopRestaurant(
 			cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
 		);
-		setCarouselList(cards[0]?.card?.card?.imageGridCards.info);
+		setCarouselList(cards[0]?.card?.card?.imageGridCards?.info);
 		setRestaurant(
 			cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
 		);
@@ -71,10 +62,26 @@ const Body = () => {
 			cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
 		);
 	};
-
+	
+	const status = useOnlineStatus();
+	
+	if(!status){
+		return (
+			<>
+				<div className="offline-container">
+				
+					<h1 className="offline-title">Connection Error</h1>
+					<p className="offline-desc">Please check your internet connection and try again.</p>
+				    <Link className="reload-btn" to="/">RELOAD</Link>
+				</div>
+			
+			
+			</>
+		)
+	}
 	
 
-	return !restaurant.length ? (
+	return restaurant?.length === 0 ? (
 		<div className="shimmer-container">
 			<CarouselSkeleton />
 			<CardSkeleton />
@@ -87,17 +94,26 @@ const Body = () => {
 					<h1 className="tag-line">What's on your mind?</h1>
 					<div className="carousel-container">
 						<div className="carousel">
-							{carouselList.map((item) => (
-								<Carousel key={item.id} carData={item} />
-							))}
+								{
+									carouselList && carouselList.map((item) => (
+									
+
+										<Link to={"/collection/" + extractCollectionId(item.entityId)} key={item.id}>
+											<Carousel carData={item} />
+										</Link>
+								))}
 						</div>
 					</div>
-					<section></section>
+					
 
 					<h1 className="tag-line">Top restaurant chains in Mumbai</h1>
 					<div className="top-restaurant-card top-res">
-						{topRestaurant.map((restaurant) => (
-							<RestaurantCard key={restaurant?.info?.id} resData={restaurant} />
+						{ topRestaurant &&  topRestaurant.map((restaurant) => (
+							<Link key={restaurant?.info?.id} to={ "/restaurant/" + restaurant?.info?.id } >
+								<RestaurantCard key={restaurant?.info?.id} resData={restaurant} />
+							
+							
+							</Link>
 						))}
 					</div>
 				</section>
@@ -132,10 +148,13 @@ const Body = () => {
 					) : (
 						<div className="restaurant-card">
 							{filterRestaurnts.map((restaurant) => (
-								<RestaurantCard
-									key={restaurant?.info?.id}
-									resData={restaurant}
-								/>
+								<Link key={restaurant?.info?.id} to={"restaurant/"  + restaurant?.info?.id}>
+									<RestaurantCard
+										key={restaurant?.info?.id}
+										resData={restaurant}
+									/>
+								
+								</Link>
 							))}
 						</div>
 					)}

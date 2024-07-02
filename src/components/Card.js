@@ -10,6 +10,7 @@ const RestaurantCard = ({ resData }) => {
         sla,
         areaName,
     } = resData?.info;
+
     return (
         <>
             <div className="card">
@@ -17,9 +18,15 @@ const RestaurantCard = ({ resData }) => {
                     <img
                         src={
                             SWIGGY_CDN_URL +
-                            cloudinaryImageId
-                        }
+                            cloudinaryImageId} 
                         alt=""
+                        onError={(e) => {
+                            e.target.style.width = "100%";
+                            e.target.style.objectFit = "contain";
+                            e.target.style.textAlign = "center";
+                            e.target.onerror = null; // Prevent infinite loop
+                            e.target.src = 'https://media-assets.swiggy.com/swiggy/image/upload/dls-web/assets/images/placeholder-light.png'; // Replace with your alternate image URL
+                        }} 
                     />
                     <div className="discount">
                         {discount && discount?.header + " " + discount?.subHeader}
